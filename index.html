@@ -26,19 +26,19 @@
             <div class="col-md-4">
                 <div class="deposit">
                     <h5>Deposit</h5>
-                    <h2>$00</h2>
+                    <h2>$<span id="current-deposit-value">00</span></h2>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="withdrow">
                     <h5>Withdrow</h5>
-                    <h2>$00</h2>
+                    <h2>$<span id="current-withdrow">00</span></h2>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="balance">
                     <h5>Balance</h5>
-                    <h2>$1240</h2>
+                    <h2>$<span id="current-balance">1240</span></h2>
                 </div>
             </div>
         </div>
@@ -46,17 +46,17 @@
             <div class="col-md-6">
                 <div class="submit-area">
                     <h5>Deposit</h5>
-                    <input type="text" class="form-control" placeholder="$ amount you want to deposit">
+                    <input type="text" class="form-control" id="deposit-input-value" placeholder="$ amount you want to deposit">
                     <br/>
-                    <button class="btn btn-success">Deposit</button>
+                    <button id="add-deposit" class="btn btn-success">Deposit</button>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="submit-area">
                     <h5>Withdrow</h5>
-                    <input type="text" class="form-control" placeholder="$amount you want to withdrow">
+                    <input type="text" class="form-control" id="withdrow-input-value" placeholder="$amount you want to withdrow">
                     <br/>
-                    <button class="btn btn-success">Withdrow</button>
+                    <button id="add-withdrow" class="btn btn-success">Withdrow</button>
                 </div>
             </div>
         </div>
@@ -64,6 +64,7 @@
 
 
     <script>
+        //login area part
         const loginBtn = document.getElementById("login");
         loginBtn.addEventListener("click", function() {
             const loginArea = document.getElementById("login-area");
@@ -71,6 +72,69 @@
             const transactionArea = document.getElementById("transaction-area");
             transactionArea.style.display = "block";
         })
+
+        //deposit part
+        const depositBtn = document.getElementById("add-deposit");
+        depositBtn.addEventListener("click", function() {
+            const depositNum = inputValue("deposit-input-value");
+            /*
+            const depositInputValue = document.getElementById("deposit-input-value").value;
+            const depositNum = parseFloat(depositInputValue);
+            
+            const currentDeposit = document.getElementById("current-deposit-value").innerText;
+            const currentDepositNum = parseFloat(currentDeposit);
+            const totalDeposit = depositNum + currentDepositNum;
+            document.getElementById("current-deposit-value").innerText = totalDeposit;
+
+            const currentBalance = document.getElementById("current-balance").innerText;
+            const currentBalanceNum = parseFloat(currentBalance);
+            const totalBalance = depositNum + currentBalanceNum;
+            document.getElementById("current-balance").innerText = totalBalance;
+            */
+            updateSpanText("current-deposit-value", depositNum);
+
+            updateSpanText("current-balance", depositNum);
+
+            document.getElementById("deposit-input-value").value = "";
+        })
+
+        //withdrow part
+        const withdrowBtn = document.getElementById("add-withdrow");
+        withdrowBtn.addEventListener("click", function() {
+            const withdrowNum = inputValue("withdrow-input-value");
+            /*
+            const withdrowInputValue = document.getElementById("withdrow-input-value").value;
+            const withdrowNum = parseFloat(withdrowInputValue);
+            
+            const currentWithdrow = document.getElementById("current-withdrow").innerText;
+            const currentWithdrowNum = parseFloat(currentWithdrow);
+            const totalWithdrow = withdrowNum + currentWithdrowNum;
+            document.getElementById("current-withdrow").innerText = totalWithdrow;
+
+            const currentWithdrowBalance = document.getElementById("current-balance").innerText;
+            const currentWithdrowBalanceNum = parseFloat(currentWithdrowBalance);
+            const totalWithdrowBalance = -1 * withdrowNum + currentWithdrowBalanceNum;
+            document.getElementById("current-balance").innerText = totalWithdrowBalance;
+            */
+            updateSpanText("current-withdrow", withdrowNum);
+
+            updateSpanText("current-balance", -1 * withdrowNum);
+
+            document.getElementById("withdrow-input-value").value = "";
+        })
+
+        function inputValue(id) {
+            const getInputValue = document.getElementById(id).value;
+            const withdrowNum = parseFloat(getInputValue);
+            return withdrowNum;
+        }
+
+        function updateSpanText(id, withdrowNum) {
+            const current = document.getElementById(id).innerText;
+            const currentNumber = parseFloat(current);
+            const totalBalance = withdrowNum + currentNumber;
+            document.getElementById(id).innerText = totalBalance;
+        }
     </script>
 </body>
 
